@@ -1,0 +1,57 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Python packaging
+*.egg-info/
+dist/
+build/
+
+# Pytest cache
+.pytest_cache/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.sublime-project
+*.sublime-workspace
+
+# Env files
+.env
+backend/.env
+frontend/.env
+
+# Docker
+docker-compose.override.yml
+**/docker-compose.override.yml
+
+# Database files
+*.db
+*.sqlite3
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Logs
+*.log
+
+# Coverage
+htmlcov/
+.coverage
+
+# Frontend build
+frontend/dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
