@@ -124,6 +124,103 @@ Plan incremental (marcaremos y completaremos conforme avance el trabajo)
 
 ---
 
+### [ ] Paso 1: Infraestructura con Docker (Postgres + smtp4dev)
+
+**Objetivo**: Levantar servicios de infraestructura (base de datos PostgreSQL y servidor SMTP de prueba) usando Docker.
+
+**Lo que aprenderás**:
+- Cómo funciona `docker compose` para orquestar múltiples contenedores
+- Configuración de PostgreSQL para desarrollo
+- Servicio SMTP de prueba (smtp4dev) para ver correos sin enviarlos realmente
+- Redes entre contenedores Docker
+
+**Archivos ya configurados**:
+- ✅ `docker-compose.yml` - Define los servicios: db (PostgreSQL) y smtp (smtp4dev)
+
+**Comandos a ejecutar**:
+
+1. **Levantar los servicios** (desde la raíz del proyecto):
+   ```bash
+   docker compose up -d
+   ```
+   - `-d` = modo "detached" (en segundo plano)
+   - Descargará las imágenes si es la primera vez (puede tardar unos minutos)
+
+2. **Verificar que los contenedores están corriendo**:
+   ```bash
+   docker compose ps
+   ```
+   - Deberías ver 2 servicios: `db` y `smtp`, ambos en estado "Up"
+
+3. **Ver los logs de los servicios** (opcional, útil para debugging):
+   ```bash
+   # Ver todos los logs
+   docker compose logs
+   
+   # Ver logs de un servicio específico
+   docker compose logs db
+   docker compose logs smtp
+   
+   # Seguir los logs en tiempo real
+   docker compose logs -f
+   ```
+
+4. **Probar la conexión a PostgreSQL**:
+   
+   Opción A - Desde la terminal con `psql` (si lo tienes instalado):
+   ```bash
+   psql -h localhost -U todo_user -d todo_db
+   # Contraseña: todo_pass
+   # Luego ejecuta: \dt para ver tablas (estará vacío por ahora)
+   # Salir: \q
+   ```
+   
+   Opción B - Usar una herramienta gráfica como:
+   - **DBeaver** (gratuito): https://dbeaver.io/
+   - **pgAdmin**: https://www.pgadmin.org/
+   - **TablePlus**: https://tableplus.com/
+   
+   Datos de conexión:
+   - Host: `localhost`
+   - Puerto: `5432`
+   - Usuario: `todo_user`
+   - Contraseña: `todo_pass`
+   - Base de datos: `todo_db`
+
+5. **Probar smtp4dev (interfaz web para correos)**:
+   - Abre tu navegador en: http://localhost:3000
+   - Verás una interfaz donde aparecerán los correos que la app envíe durante desarrollo
+   - Por ahora estará vacía (enviaremos correos en pasos posteriores)
+
+6. **Detener los servicios cuando termines**:
+   ```bash
+   # Detener sin eliminar los contenedores
+   docker compose stop
+   
+   # Detener y eliminar contenedores (pero conserva los datos en volumes)
+   docker compose down
+   
+   # Eliminar TODO incluyendo datos (⚠️ CUIDADO)
+   docker compose down -v
+   ```
+
+**Criterios de éxito**:
+- ✅ `docker compose ps` muestra ambos servicios en estado "Up"
+- ✅ Puedes conectarte a PostgreSQL en localhost:5432
+- ✅ Puedes ver la interfaz de smtp4dev en http://localhost:3000
+- ✅ No hay errores en los logs (`docker compose logs`)
+
+**Problemas comunes**:
+- **Puerto 5432 ya en uso**: Tienes PostgreSQL instalado localmente. Opción 1: Detén tu PostgreSQL local. Opción 2: Cambia el puerto en docker-compose.yml (ej: "5433:5432")
+- **Puerto 3000 ya en uso**: Cambia el puerto en docker-compose.yml (ej: "3001:80")
+- **Docker daemon no está corriendo**: Abre Docker Desktop y espera a que inicie
+- **Error de permisos en volúmenes**: En Windows, asegúrate de que Docker Desktop tenga acceso a la unidad donde está el proyecto
+
+**Notas importantes**:
+- Los datos de PostgreSQL se guardan en un volumen Docker llamado `db_data`, así que persisten aunque detengas los contenedores
+- smtp4dev NO envía correos realmente, solo los muestra en su interfaz - perfecto para desarrollo
+- El servicio `web` (backend) está comentado en docker-compose.yml porque aún no hemos creado el directorio backend
+
 ---
 
 ### [ ] Paso 2: Scaffolding del backend (estructura y requirements)
