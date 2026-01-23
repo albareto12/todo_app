@@ -371,8 +371,15 @@ Contacto rápido y flujo de trabajo contigo
 - Yo te doy: el contenido listo, una explicación línea por línea si la pides, y los comandos para probar.  
 - Tú haces: pegas/guardas los archivos, ejecutas los comandos y me dices los resultados.
 
-Registro de cambios (se irá llenando)
-- 2025-11-20: Se creó README incremental y .gitignore; punto de partida para el trabajo guiado.
+## Registro de cambios
+
+- **2026-01-23**: Correcciones y mejoras importantes:
+  - Corregida sintaxis de docker-compose.yml (YAML, variables de entorno)
+  - Añadida documentación completa de Paso 0 (setup de entorno)
+  - Añadida documentación completa de Paso 1 (infraestructura Docker)
+  - Añadida documentación detallada de Paso 2 (scaffolding backend)
+  - Añadidos prerrequisitos, recursos adicionales y guía de inicio
+- **2025-11-20**: Se creó README incremental y .gitignore; punto de partida para el trabajo guiado.
 
 
 ---
