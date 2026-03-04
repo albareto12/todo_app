@@ -1,42 +1,40 @@
-version ¨3.8¨
-
 services:
   db: 
     image: postgres:15
     restart: unless-stopped
     environment:
-      - POSTGRES_USER: todo_user
-      -  POSTGRES_PASSWORD: todo_pass
-      - POSTGRES_DB: todo_db
+      - POSTGRES_USER=todo_user
+      - POSTGRES_PASSWORD=todo_pass
+      - POSTGRES_DB=todo_db
     volumes:  
       - db_data:/var/lib/postgresql/data  
     ports:
       - "5432:5432"
     
-    smtp:
+  smtp:
     image: rnwood/smtp4dev:latest
     restart: unless-stopped
     ports:
       - "3000:80"   # UI web de smtp4dev
       - "25:25"     # puerto SMTP
 
-  web:
-    build:
-      context: ./git statbackend
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    depends_on:
-      - db
-      - smtp
-    environment:
-      - DATABASE_URL=postgresql+psycopg2://todo_user:todo_pass@db:5432/todo_db
-      - SMTP_HOST=smtp
-      - SMTP_PORT=25
-      - SECRET_KEY=changeme123
-    volumes:
-      - ./backend:/app    # bind mount para desarrollo (edita código localmente)
-    ports:
-      - "8000:8000"
+  # web:
+  #   build:
+  #     context: ./backend
+  #     dockerfile: Dockerfile
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - db
+  #     - smtp
+  #   environment:
+  #     - DATABASE_URL=postgresql+psycopg2://todo_user:todo_pass@db:5432/todo_db
+  #     - SMTP_HOST=smtp
+  #     - SMTP_PORT=25
+  #     - SECRET_KEY=changeme123
+  #   volumes:
+  #     - ./backend:/app    # bind mount para desarrollo (edita código localmente)
+  #   ports:
+  #     - "8000:8000"
 
 volumes:
   db_data:
